@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action-mapping id="1000">
+        <name>Logar</name>
+        <class>com.micropakito.server.acciones.Logar</class>
+    </action-mapping>
+</actions>
+
