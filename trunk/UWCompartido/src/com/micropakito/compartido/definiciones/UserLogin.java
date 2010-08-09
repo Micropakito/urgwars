@@ -25,6 +25,10 @@ public class UserLogin implements Serializable {
 		setPass(pass);
 		
 	}
+        public UserLogin() {
+
+
+        }
 
 	public void setLogin(String login) {
 		this.login = login;
