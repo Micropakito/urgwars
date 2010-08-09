@@ -5,6 +5,7 @@
 
 package com.micropakito.server.paquete;
 
+import com.micropakito.compartido.Message;
 import com.micropakito.server.ServerHilo;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class Paquete {
     private int id;
     private ServerHilo srv;
 
+    private Message msg ;
+
     public Paquete(  int id, String idClase, Class clase, Object obj, ServerHilo srv  ) {
 
         Class[] clasesParamSetEmail;
@@ -41,7 +44,6 @@ public class Paquete {
         //busco el id en el fichero properties
         Properties prop = new Properties();
         InputStream is = null;
-        System.out.println("Que cojones es el idClase: " + idClase );
         try {
 
          //leo la accion que será ejecutada
@@ -68,13 +70,19 @@ public class Paquete {
           paramSetEmail[3] = obj ;
           paramSetEmail[4] = this.getSrv() ;
           
-          
-
           Object ob = claseEjecuta.newInstance();
-          meth.invoke(ob, paramSetEmail);
+          Message m = (Message) meth.invoke(ob, paramSetEmail);
+          this.setMsg(m);
+
+          //TODO
+          //cuando se invoke el método debe devolver un mensaje, que será
+          //La respuesta al cliente.
+          //Como el findfordward de las acciones de Java
+          
 
           //http://www.javahispano.org/contenidos/es/introduccrion_al_api_reflection_reflexrion_de_ja/
-          
+
+
         } catch(Exception e) {
             System.out.println("Error en Paquete: " + e.getMessage());
         }
@@ -123,6 +131,20 @@ public class Paquete {
      */
     public void setSrv(ServerHilo srv) {
         this.srv = srv;
+    }
+
+    /**
+     * @return the msg
+     */
+    public Message getMsg() {
+        return msg;
+    }
+
+    /**
+     * @param msg the msg to set
+     */
+    public void setMsg(Message msg) {
+        this.msg = msg;
     }
     
 }

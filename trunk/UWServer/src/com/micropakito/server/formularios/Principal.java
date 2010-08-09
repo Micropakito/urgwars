@@ -172,7 +172,7 @@ public class Principal extends javax.swing.JFrame {
          //s = new Servidor();
          for (int i = puertoInicio ;i < puertoInicio + numeroServidores ; i ++ ){
             //s.nuevoServidor( i , getTxtInfo(), servidores, this);
-            this.getServidores().add( i - puertoInicio ,new ServerHilo ( i , this.getServidores() ));
+            this.getServidores().add( i - puertoInicio , new ServerHilo ( i , this.getServidores() ));
 
          }   
     }
