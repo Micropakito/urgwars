@@ -47,12 +47,12 @@ public class AtencionClienteThread extends Thread {
                 Message messageObject ;
 
                 do {
-                    ObjectInputStream in  = new ObjectInputStream(SockCliente.getInputStream());
+                    ObjectInputStream in  = new ObjectInputStream( SockCliente.getInputStream() );
                     messageObject = (Message)in.readObject();
 
                 } while ( TrataMensaje ( messageObject ) ) ;
 
-                SockCliente.close();
+//                SockCliente.close();
 
             } catch (IOException e){
 
@@ -77,7 +77,7 @@ public class AtencionClienteThread extends Thread {
             ObjectOutputStream salida;
             try {
                 salida = new ObjectOutputStream(SockCliente.getOutputStream());
-                salida.writeObject("cipote");
+                salida.writeObject( paq.getMsg() );
                 salida.flush();
             } catch (IOException ex) {
                 Logger.getLogger(AtencionClienteThread.class.getName()).log(Level.SEVERE, null, ex);

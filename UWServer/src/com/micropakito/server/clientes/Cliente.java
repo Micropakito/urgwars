@@ -28,6 +28,10 @@ public class Cliente {
 		this.nick = nick;
 	
 	}
+        public Cliente(){
+
+            
+        }
 
 	public void setId(int id) {
 		this.id = id;
