@@ -163,9 +163,11 @@ public class Login extends javax.swing.JFrame {
             System.out.println("respuesta:");
             
             ObjectInputStream in  = new ObjectInputStream(s.getInputStream());
-            String messageObject = (String)in.readObject();
+            Message messageObject = (Message)in.readObject();
 
-            System.out.println("mensaje recibido:" + messageObject) ;
+            UserLogin usd = (UserLogin)messageObject.getObjeto();
+
+            System.out.println("mensaje recibido:" + messageObject.getID() + " Y la clase:" + messageObject.getClase().toString() + " y el login devuelto: " + usd.getLogin() + " - " + usd.getPass() ) ;
 
 
             
