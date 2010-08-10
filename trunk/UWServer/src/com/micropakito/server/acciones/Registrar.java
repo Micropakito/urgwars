@@ -10,6 +10,7 @@ import com.micropakito.compartido.definiciones.Registro;
 import com.micropakito.persist.entity.usuarios.Usuarios;
 import com.micropakito.persist.entity.usuarios.UsuariosJpaController;
 import com.micropakito.server.ServerHilo;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,14 +39,25 @@ public class Registrar {
             
             UsuariosJpaController usrjpa = new UsuariosJpaController();
 
-            Usuarios usExi = (Usuarios) usrjpa.getEntityManager().createNamedQuery("Usuarios.findByNick").setParameter("nick", reg.getNick() );
+            List cont = (List)usrjpa.getEntityManager().createNamedQuery("Usuarios.findByNick").setParameter("nick", reg.getNick() ).getResultList();
             
-            if ( usExi != null ) {
+            if ( cont.size() > 0 ) {
             
                 msgDev.setObjeto( (Object) new com.micropakito.compartido.definiciones.RegistroDev("El Usuario Ya Exite", "El Usuario ya Existe", 2) );
                 return msgDev;
             
             }
+
+            cont = (List)usrjpa.getEntityManager().createNamedQuery("Usuarios.findByMail").setParameter("mail", reg.getMail() ).getResultList();
+
+            if ( cont.size() > 0 ) {
+
+                msgDev.setObjeto( (Object) new com.micropakito.compartido.definiciones.RegistroDev("El Mail Ya Exite", "El Usuario ya Existe", 2) );
+                return msgDev;
+
+            }
+
+            //existe el mail
 
             //mail distinto
             if (! reg.getMail().equals( reg.getMail_rep() )){
