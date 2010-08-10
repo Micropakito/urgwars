@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.micropakito.compartido.*;
+import com.micropakito.compartido.definiciones.Registro;
+import com.micropakito.compartido.definiciones.RegistroDev;
 import com.micropakito.compartido.definiciones.UserLogin;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,11 +30,19 @@ import java.io.ObjectOutputStream;
  * @author  Administrador
  */
 public class Login extends javax.swing.JFrame {
-    Socket s;
+    private Socket s;
              
     /** Creates new form Login */
     public Login() {
         initComponents();
+        try {
+           this.s = new Socket("127.0.0.1", 22222);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /** This method is called from within the constructor to
@@ -50,6 +60,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario de Login");
@@ -80,6 +91,13 @@ public class Login extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 10));
         jButton3.setText("ES");
 
+        jButton4.setText("Registrar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton4MousePressed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,11 +109,13 @@ public class Login extends javax.swing.JFrame {
                         .add(jButton1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 80, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jButton4)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton3))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                            .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                             .add(jLabel2))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
@@ -118,7 +138,8 @@ public class Login extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButton1)
                     .add(jButton2)
-                    .add(jButton3))
+                    .add(jButton3)
+                    .add(jButton4))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -130,10 +151,10 @@ public class Login extends javax.swing.JFrame {
             // TODO add your handling code here:
             System.out.println("pulsando el botón");
 
-            s = new Socket("127.0.0.1", 22222);
+            //s = new Socket("127.0.0.1", 22222);
             
             ObjectOutputStream salida;
-            salida = new ObjectOutputStream( s.getOutputStream() );
+            salida = new ObjectOutputStream( getS().getOutputStream() );
             //PrintWriter output = new PrintWriter(s.getOutputStream());
             UserLogin ul = new UserLogin(txtUser.getText(), txtPass.getText());
             
@@ -143,33 +164,17 @@ public class Login extends javax.swing.JFrame {
                                                ul );
             salida.writeObject(envioMensaje);
             salida.flush();
-//            output.writeObject();
-//            output.print(envioMensaje);
-//
-//            output.flush();
+
             System.out.println("enviado");
-            
-//            BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//
-//            String linea= input.readLine();
-//
-//            //while(linea!=null) {
-//            System.out.println(linea);
-//            linea= input.readLine();
-               
-           // } 
-            
-           // System.out.println("Recibido cliente:" + input.readLine() );
+
             System.out.println("respuesta:");
             
-            ObjectInputStream in  = new ObjectInputStream(s.getInputStream());
+            ObjectInputStream in  = new ObjectInputStream(getS().getInputStream());
             Message messageObject = (Message)in.readObject();
 
             UserLogin usd = (UserLogin)messageObject.getObjeto();
 
             System.out.println("mensaje recibido:" + messageObject.getID() + " Y la clase:" + messageObject.getClase().toString() + " y el login devuelto: " + usd.getLogin() + " - " + usd.getPass() ) ;
-
-
             
         } catch (Exception ex) {
           System.out.println("Error:" + ex.getMessage());
@@ -181,11 +186,11 @@ public class Login extends javax.swing.JFrame {
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
         // TODO add your handling code here:
        try {
-           PrintWriter output = new PrintWriter(s.getOutputStream());
+           PrintWriter output = new PrintWriter(getS().getOutputStream());
            output.println("\\about");
            output.flush(); 
            
-           BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
+           BufferedReader input = new BufferedReader(new InputStreamReader(getS().getInputStream()));
             
            String linea= input.readLine(); 
             
@@ -206,6 +211,48 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
+
+        try {
+            // TODO add your handling code here:
+            
+            ObjectOutputStream salida;
+            salida = new ObjectOutputStream(getS().getOutputStream());
+            //PrintWriter output = new PrintWriter(s.getOutputStream());
+            //UserLogin ul = new UserLogin(txtUser.getText(), txtPass.getText());
+            Registro reg = new Registro();
+            
+            reg.setApellidos("Pascual");
+            reg.setMail("micropakito@gmail.com");
+            reg.setMail_rep("micropakito@gmail.com");
+            reg.setNacimiento("18/04/1980");
+            reg.setNick("micropakito");
+            reg.setNombre("Sergio");
+            reg.setPass("123456");
+            reg.setPass_rep("123456");
+
+            Message envioMensaje = new Message(10000,
+                                               "Registrar", Class.forName("com.micropakito.compartido.definiciones.Registro"), reg);
+            salida.writeObject(envioMensaje);
+            salida.flush();
+
+            System.out.println("enviado Registro");
+            System.out.println("respuesta:");
+            ObjectInputStream in = new ObjectInputStream(getS().getInputStream());
+            Message messageObject = (Message) in.readObject();
+            RegistroDev usd = (RegistroDev) messageObject.getObjeto();
+            System.out.println("mensaje recibido:" + messageObject.getID() + " Y la clase:" + messageObject.getClase().toString() + " y el registro devuelto: " + usd.getMensaje() + " - " + usd.getDescripcion() );
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButton4MousePressed
     
     /**
      * @param args the command line arguments
@@ -222,10 +269,25 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the s
+     */
+    public Socket getS() {
+        return s;
+    }
+
+    /**
+     * @param s the s to set
+     */
+    public void setS(Socket s) {
+        this.s = s;
+    }
     
 }
