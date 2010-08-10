@@ -4,5 +4,9 @@
         <name>Logar</name>
         <class>com.micropakito.server.acciones.Logar</class>
     </action-mapping>
+    <action-mapping id="10000">
+        <name>Registrar</name>
+        <class>com.micropakito.server.acciones.Registrar</class>
+    </action-mapping>
 </actions>
 

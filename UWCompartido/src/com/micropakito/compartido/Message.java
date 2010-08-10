@@ -29,7 +29,7 @@ public class Message implements Serializable {
 		setObjeto(objeto);
 		
 	}
-
+        public Message ( ) { }
 	public void setID(int iD) {
 		ID = iD;
 	}
