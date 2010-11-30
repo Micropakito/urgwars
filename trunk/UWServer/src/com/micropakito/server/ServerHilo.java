@@ -6,13 +6,13 @@
  */
 package com.micropakito.server;
 
-import java.io.*;
+
 import java.net.*;
 import java.util.ArrayList;
 
 import com.micropakito.server.errores.TrataError;
 import com.micropakito.server.utilidades.InfoServer;
-import com.micropakito.server.utilidades.Log;
+
 
 /**
  * @author userxp
@@ -24,21 +24,21 @@ public class ServerHilo extends Thread {
 	
 //	clientes conectados a este hilo del server
 	ArrayList clientes = new ArrayList() ; 
-	private ArrayList servidores = new ArrayList();
+	private Servidores servidores;
 	
 	private ServerSocket socketServidor ;
 	private Socket socketCliente ;
         
 // 	puerto del server	
 	private int puerto ;
-        private int id;
         private String nombre;
 	/**
          * Constructor ServerHilo
          */
-	public ServerHilo ( int puerto, ArrayList servidores ) {
+	public ServerHilo ( int puerto, Servidores servidores, int id ) {
                
 		this.servidores = servidores;
+                this.servidores.addServer(id, this);
                 this.nombre = "Nombre: " + puerto;
                 setPuerto(puerto);
 		this.start();
@@ -121,11 +121,11 @@ public class ServerHilo extends Thread {
 		return socketCliente;
 	}
 
-    public ArrayList getServidores() {
+    public Servidores getServidores() {
         return servidores;
     }
 
-    public void setServidores(ArrayList servidores) {
+    public void setServidores(Servidores servidores) {
         this.servidores = servidores;
     }
 

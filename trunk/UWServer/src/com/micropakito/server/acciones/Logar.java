@@ -44,7 +44,7 @@ public class Logar {
 
         //System.out.println("Accedo hasta el principal..." + serverContext.getServidor().getPpal().getTxtInfo().getText() ) ;
 
-        ArrayList al = (ArrayList)serverContext.getServidores();
+        ArrayList al = (ArrayList)serverContext.getServidores().getServidores();
 
         Iterator it = al.iterator();
         Cliente c = new Cliente();

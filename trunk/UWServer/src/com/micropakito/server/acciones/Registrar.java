@@ -96,6 +96,7 @@ public class Registrar {
         } catch (Exception exs) {
 
             System.out.println("Tacaaaaaaaa" + exs.getMessage() );
+            msgDev.setObjeto( (Object) new com.micropakito.compartido.definiciones.RegistroDev("La base de datos está caída", "La base de datos está caída", 2) );
 
         }
 

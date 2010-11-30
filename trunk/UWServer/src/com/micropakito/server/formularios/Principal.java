@@ -7,6 +7,7 @@
 package com.micropakito.server.formularios;
 
 import com.micropakito.server.ServerHilo;
+import com.micropakito.server.Servidores;
 import com.micropakito.server.utilidades.Constantes;
 import java.util.ArrayList;
 
@@ -168,13 +169,16 @@ public class Principal extends javax.swing.JFrame {
         //PararTodos();
     }//GEN-LAST:event_btnPararMousePressed
     private void ArrancarTodos(){
-    
+        Servidores srvs = new Servidores();
          //s = new Servidor();
-         for (int i = puertoInicio ;i < puertoInicio + numeroServidores ; i ++ ){
+        for (int i = puertoInicio ;i < puertoInicio + numeroServidores ; i ++ ){
             //s.nuevoServidor( i , getTxtInfo(), servidores, this);
-            this.getServidores().add( i - puertoInicio , new ServerHilo ( i , this.getServidores() ));
+            
+            
+            //this.getServidores().add( i - puertoInicio , new ServerHilo ( i , srvs ));
+            new ServerHilo ( i , srvs, i - puertoInicio );
 
-         }   
+        }   
     }
 //    private void PararTodos() {
 //
