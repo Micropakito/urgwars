@@ -6,7 +6,6 @@
  */
 package com.micropakito.server.utilidades;
 
-import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import com.micropakito.server.errores.TrataError;
 
 import org.jdom.*;
 import org.jdom.input.*;
-import org.jdom.output.*;
-
 
 
 /**
@@ -49,8 +46,9 @@ public class InfoServer {
 		
 		this.hiloServidor = hiloServidor;
 		this.id = hiloServidor.getPuerto() - Constantes.puertoInicio;
-        System.out.println("id server ->" + this.id );
+                System.out.println("id server ->" + this.id );
 		this.puerto = hiloServidor.getPuerto();
+                
 	}
 	/**
 	 * Funcion que carga el fichero de configuración del servidor. 
