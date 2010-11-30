@@ -76,9 +76,7 @@ public class ServerHilo extends Thread {
             while(true) {
                 try {
                     setSocketCliente(socketServidor.accept());
-
                     System.out.println( "Cerrado ??" + socketServidor.isClosed() );
-
                     AtencionClienteThread cliente = new AtencionClienteThread( getSocketCliente() , this );
                 }
                 catch (Exception e) {
