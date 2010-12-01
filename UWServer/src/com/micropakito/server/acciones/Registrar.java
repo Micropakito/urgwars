@@ -10,6 +10,8 @@ import com.micropakito.compartido.definiciones.Registro;
 import com.micropakito.persist.entity.usuarios.Usuarios;
 import com.micropakito.persist.entity.usuarios.UsuariosJpaController;
 import com.micropakito.server.ServerHilo;
+import com.micropakito.server.utilidades.TrataFechas;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +83,8 @@ public class Registrar {
             us.setPass(reg.getPass());
             us.setApellidos(reg.getApellidos());
             us.setMail(reg.getMail());
+            System.out.println(reg.getNacimiento());
+            us.setNacimiento(new TrataFechas().convierteMysqJava(reg.getNacimiento()));
             us.setRol(0);
 
             UsuariosJpaController usjpa = new UsuariosJpaController();

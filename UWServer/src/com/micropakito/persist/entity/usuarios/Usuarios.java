@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author PascuaS
+ * @author Micropakito
  */
 @Entity
 @Table(name = "usuarios")
@@ -49,7 +49,7 @@ public class Usuarios implements Serializable {
     @Column(name = "apellidos")
     private String apellidos;
     @Column(name = "nacimiento")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date nacimiento;
     @Column(name = "mail")
     private String mail;
