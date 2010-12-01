@@ -224,10 +224,10 @@ public class Login extends javax.swing.JFrame {
             Registro reg = new Registro();
             
             reg.setApellidos("Pascual");
-            reg.setMail("micropakito2@gmail.com");
-            reg.setMail_rep("micropakito@gmail.com");
-            reg.setNacimiento("18/04/1980");
-            reg.setNick("micropakito2");
+            reg.setMail("micropakito@hotmail.com");
+            reg.setMail_rep("micropakito@hotmail.com");
+            reg.setNacimiento("18-04-1980");
+            reg.setNick("micropakito3");
             reg.setNombre("Sergio");
             reg.setPass("123456");
             reg.setPass_rep("123456");
