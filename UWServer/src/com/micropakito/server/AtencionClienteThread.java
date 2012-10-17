@@ -76,9 +76,10 @@ public class AtencionClienteThread extends Thread {
 
             ObjectOutputStream salida;
             try {
-                salida = new ObjectOutputStream(SockCliente.getOutputStream());
+                salida = new ObjectOutputStream( SockCliente.getOutputStream() );
                 salida.writeObject( paq.getMsg() );
                 salida.flush();
+                
             } catch (IOException ex) {
                 Logger.getLogger(AtencionClienteThread.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -103,7 +104,7 @@ public class AtencionClienteThread extends Thread {
 	 * sincronizado para que no se ataque a la vez al array de clientes
 	 */
 	private synchronized void anadeCliente ( Cliente cli ) {
-		getSrv().getClientes().add( cli.getId(), cli );
+		getSrv().getClientes().put( cli.getId(), cli );
 	}
 	
 	public void enviaObjetoCliente ( Object Objeto ) {

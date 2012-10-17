@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import com.micropakito.server.errores.TrataError;
 import com.micropakito.server.utilidades.InfoServer;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 
 /**
@@ -23,7 +25,7 @@ import com.micropakito.server.utilidades.InfoServer;
 public class ServerHilo extends Thread {
 	
 //	clientes conectados a este hilo del server
-	ArrayList clientes = new ArrayList() ; 
+	HashMap clientes = new HashMap() ; 
 	private Servidores servidores;
 	
 	private ServerSocket socketServidor ;
@@ -44,10 +46,10 @@ public class ServerHilo extends Thread {
 		this.start();
 		
 	}
-        public ArrayList getClientes () {
+        public HashMap getClientes () {
 		return clientes;
 	}
-	public void setClientes (ArrayList clientes ) {
+	public void setClientes (HashMap clientes ) {
 		this.clientes = clientes;
 	}
 		
