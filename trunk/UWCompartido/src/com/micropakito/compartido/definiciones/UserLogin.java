@@ -18,11 +18,19 @@ public class UserLogin implements Serializable {
 
 	private String login ;
 	private String pass;
+        private String server;
 	
 	public UserLogin (String login, String pass ) {
 	
 		setLogin(login);
 		setPass(pass);
+        	
+	}
+        public UserLogin (String login, String pass, String server ) {
+	
+		setLogin(login);
+		setPass(pass);
+                setServer(server);
 		
 	}
         public UserLogin() {
@@ -44,6 +52,20 @@ public class UserLogin implements Serializable {
 
 	public String getPass() {
 		return pass;
-	}	
+	}
+
+        /**
+        * @return the server
+        */
+        public String getServer() {
+            return server;
+        }
+
+        /**
+        * @param server the server to set
+        */
+        public void setServer(String server) {
+            this.server = server;
+        }
 
 }
