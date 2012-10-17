@@ -29,7 +29,13 @@ public class Logar {
         System.out.println("Con el siguiente id" + idClase) ;
         System.out.println("Login que hace" + ul.getLogin()) ;
 
-
+        //Añadir al usuario por nombre de servidor.
+        
+        //public ServerHilo getServerByName(String name){
+        //serverContext.getServidores().getServerByName(idClase)
+    
+    
+           
         //Trato de acceder al cliente (por si ya está logado)
 
         try {
@@ -54,7 +60,7 @@ public class Logar {
         while (it.hasNext()) {
             ServerHilo srv = (ServerHilo)it.next();
             System.out.println("Usuarios en server: " + srv.getNombre() );
-            srv.getClientes().add(0, c);
+            srv.getClientes().add(srv.getClientes().size(), c);
         }
         try {
 
@@ -66,13 +72,11 @@ public class Logar {
             Message m = new Message(100, "De vuelta logando", Class.forName("com.micropakito.compartido.definiciones.UserLogin"), (Object)uld);
             
             return m;
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Logar.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-
-        
-        
 
     }
 

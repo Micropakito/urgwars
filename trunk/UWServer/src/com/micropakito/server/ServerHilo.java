@@ -44,7 +44,7 @@ public class ServerHilo extends Thread {
 		this.start();
 		
 	}
-	public ArrayList getClientes () {
+        public ArrayList getClientes () {
 		return clientes;
 	}
 	public void setClientes (ArrayList clientes ) {

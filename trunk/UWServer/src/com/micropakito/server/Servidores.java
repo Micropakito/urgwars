@@ -6,6 +6,7 @@
 package com.micropakito.server;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class Servidores {
 
     private ArrayList servidores ;
+    
     public Servidores(){
         this.servidores = new ArrayList();
     }
@@ -24,7 +26,20 @@ public class Servidores {
     public ArrayList getServidores() {
         return servidores;
     }
-
+    public ServerHilo getServerByName(String name){
+     
+        Iterator it = this.servidores.iterator();
+        
+        while (it.hasNext()){
+            ServerHilo sh = (ServerHilo)it.next();
+            
+            if ( sh.getNombre().equalsIgnoreCase(name) ){
+                return sh;
+            }
+        }
+       return null; 
+    
+    }
     /**
      * @param servidores the servidores to set
      */
