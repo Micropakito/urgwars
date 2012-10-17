@@ -48,7 +48,7 @@ public class Paquete {
 
          //leo la accion que será ejecutada
          LeeXML lxml = new LeeXML("build/classes/com/micropakito/server/config/parseo.xml");
-         
+         System.out.println("tararilo" + lxml.getClass(Integer.toString(id) ));
          Class claseEjecuta = Class.forName( lxml.getClass(Integer.toString(id) ));
 
           //Ejecuto el metodo arranca que será el que haga cosas

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author  Administrador
  */
 public class Principal extends javax.swing.JFrame {
-    private static final int numeroServidores = 5;
+    private static final int numeroServidores = 2;
     private static final int puertoInicio = Constantes.puertoInicio ;
 
     private ArrayList servidores = new ArrayList();

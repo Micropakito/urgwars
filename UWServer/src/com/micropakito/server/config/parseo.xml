@@ -8,5 +8,9 @@
         <name>Registrar</name>
         <class>com.micropakito.server.acciones.Registrar</class>
     </action-mapping>
+    <action-mapping id="1001">
+        <name>ListarServidores</name>
+        <class>com.micropakito.server.acciones.ListarServidores</class>
+    </action-mapping>
 </actions>
 
