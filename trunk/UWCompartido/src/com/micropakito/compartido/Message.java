@@ -29,6 +29,14 @@ public class Message implements Serializable {
 		setObjeto(objeto);
 		
 	}
+        public Message ( int ID, String desc ) {
+
+		setID(ID);
+		setDesc(desc);
+//		setClase(null);
+//		setObjeto(null);
+		
+	}
         public Message ( ) { }
 	public void setID(int iD) {
 		ID = iD;
