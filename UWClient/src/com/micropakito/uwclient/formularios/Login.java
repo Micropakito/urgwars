@@ -214,11 +214,12 @@ public class Login extends javax.swing.JFrame {
             System.out.println("respuesta:");
             
             ObjectInputStream in  = new ObjectInputStream(getS().getInputStream());
+            System.out.println("respuesta:");
             Message messageObject = (Message)in.readObject();
 
-            UserLogin usd = (UserLogin)messageObject.getObjeto();
-
-            System.out.println("mensaje recibido:" + messageObject.getID() + " Y la clase:" + messageObject.getClase().toString() + " y el login devuelto: " + usd.getLogin() + " - " + usd.getPass() ) ;
+//            UserLogin usd = (UserLogin)messageObject.getObjeto();
+             System.out.println("mensaje recibido:" + messageObject.getDesc() ) ;
+//            System.out.println("mensaje recibido:" + messageObject.getID() + " Y la clase:" + messageObject.getClase().toString() + " y el login devuelto: " + usd.getLogin() + " - " + usd.getPass() ) ;
             
         } catch (Exception ex) {
           System.out.println("Error:" + ex.getMessage());
