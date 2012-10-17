@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import com.micropakito.compartido.*;
 import com.micropakito.compartido.definiciones.Registro;
 import com.micropakito.compartido.definiciones.RegistroDev;
+import com.micropakito.compartido.definiciones.ServerList;
 import com.micropakito.compartido.definiciones.UserLogin;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,8 +44,35 @@ public class Login extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        rellenaComboServers();
     }
-    
+    private void rellenaComboServers(){
+        jComboBox1.removeAllItems();
+        try {
+            ServerList sl = new ServerList();
+            sl.setServidores(new String[1]);
+            
+            ObjectOutputStream salida = new ObjectOutputStream( getS().getOutputStream() );
+            
+            Message envioMensaje = new Message(1001,
+                                                "ListarServidores",
+                                                Class.forName("com.micropakito.compartido.definiciones.ServerList"),
+                                                sl );
+            salida.writeObject(envioMensaje);
+            salida.flush();
+            ObjectInputStream in  = new ObjectInputStream(getS().getInputStream());
+            Message messageObject = (Message)in.readObject();
+
+            sl = (ServerList)messageObject.getObjeto();
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(sl.getServidores() ));
+            
+        }catch(Exception ex) {
+        
+        }
+        
+        
+        
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -61,6 +89,8 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario de Login");
@@ -88,7 +118,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña");
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jButton3.setText("ES");
 
         jButton4.setText("Registrar");
@@ -97,6 +127,10 @@ public class Login extends javax.swing.JFrame {
                 jButton4MousePressed(evt);
             }
         });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel3.setText("Servidor");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,12 +149,17 @@ public class Login extends javax.swing.JFrame {
                         .add(jButton3))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                            .add(jLabel2))
+                            .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(layout.createSequentialGroup()
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel2)
+                                    .add(jLabel3))
+                                .add(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(txtUser)
-                            .add(txtPass, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))))
+                            .add(txtPass, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .add(jComboBox1, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -134,13 +173,17 @@ public class Login extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel2)
                     .add(txtPass, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(26, 26, 26)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 15, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel3))
+                .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButton1)
                     .add(jButton2)
                     .add(jButton3)
                     .add(jButton4))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -149,14 +192,15 @@ public class Login extends javax.swing.JFrame {
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         try {
             // TODO add your handling code here:
-            System.out.println("pulsando el botón");
-
+            
             //s = new Socket("127.0.0.1", 22222);
             
             ObjectOutputStream salida;
             salida = new ObjectOutputStream( getS().getOutputStream() );
             //PrintWriter output = new PrintWriter(s.getOutputStream());
-            UserLogin ul = new UserLogin(txtUser.getText(), txtPass.getText());
+            UserLogin ul = new UserLogin(txtUser.getText(), txtPass.getText(), (String)jComboBox1.getSelectedItem());
+            
+            System.out.println("pulsando el botón "  +  (String)jComboBox1.getSelectedItem() );
             
             Message envioMensaje = new Message(1000,
                                                "Logar",
@@ -270,8 +314,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
