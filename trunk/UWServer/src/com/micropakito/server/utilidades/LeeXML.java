@@ -27,9 +27,6 @@ public class LeeXML {
 
         this.xml = xml;
 
-       
-
-
     }
 
     public String getClass(String id) {
