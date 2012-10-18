@@ -24,103 +24,107 @@ import java.util.Hashtable;
  */
 public class ServerHilo extends Thread {
 	
-//	clientes conectados a este hilo del server
-	HashMap clientes = new HashMap() ; 
-	private Servidores servidores;
-	
-	private ServerSocket socketServidor ;
-	private Socket socketCliente ;
-        
+//  clientes conectados a este hilo del server
+    HashMap clientes = new HashMap() ; 
+    private Servidores servidores;
+
+    private ServerSocket socketServidor ;
+    private Socket socketCliente ;
+
 // 	puerto del server	
-	private int puerto ;
-        private String nombre;
-	/**
-         * Constructor ServerHilo
-         */
-	public ServerHilo ( int puerto, Servidores servidores, int id ) {
-               
-		this.servidores = servidores;
-                this.servidores.addServer(id, this);
-                this.nombre = "Nombre: " + puerto;
-                setPuerto(puerto);
-		this.start();
-		
-	}
-        public HashMap getClientes () {
-		return clientes;
-	}
-	public void setClientes (HashMap clientes ) {
-		this.clientes = clientes;
-	}
-		
-	public static void main(String[] args) {}
-	
-	public void run(){
-	
-		//ServerSocket socketServidor = null;
-		//Socket socketCliente = null;
-            try {
-                socketServidor = new ServerSocket ( this.getPuerto() );
-                            //cargo información del servidor
-                InfoServer is = new InfoServer( this );
-                            //añado al arraylist con los hilos del servidor
-                //this.getServidores().add( is.getId() , this );
-                is.cargaInfo();
-           }
+    private int puerto ;
+    private String nombre;
+    /**
+        * Constructor ServerHilo
+        */
+    public ServerHilo ( int puerto, Servidores servidores, int id ) {
 
-            catch (Exception e){
-                TrataError te = new TrataError( 100, "Error Arrancando Servidor", e );
-                te.Trata();
-            }
+        this.servidores = servidores;
+        this.servidores.addServer(id, this);
+        this.nombre = "Nombre: " + puerto;
+        setPuerto(puerto);
+        this.start();
 
-           // new Log("Servidor iniciado... (Socket TCP). Puerto de escucha:" + this.getPuerto()).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
-             //System.out.println ("Servidor iniciado... (Socket TCP). Puerto de escucha:" + this.getPuerto() );
-            while(true) {
-                try {
-                    setSocketCliente(socketServidor.accept());
-                    System.out.println( "Cerrado ??" + socketServidor.isClosed() );
-                    AtencionClienteThread cliente = new AtencionClienteThread( getSocketCliente() , this );
-                }
-                catch (Exception e) {
-                    new TrataError(200, "Error Aceptando Cliente", e).Trata();
-                    //socketServidor.close();
-                }
-            }
-	}
-        public void Parar() {
-            try {
-                this.getSocketServidor().close();
-               // new Log("Servidor detenido" + this.getPuerto() ).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
-            }
-            catch (Exception ex) {
-               // new Log("Error Parando Servidor: " + ex.getMessage() ).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
-            }
+    }
+    public HashMap getClientes () {
+            return clientes;
+    }
+    public void setClientes (HashMap clientes ) {
+            this.clientes = clientes;
+    }
 
+    public static void main(String[] args) {}
+
+    public void run(){
+
+            //ServerSocket socketServidor = null;
+            //Socket socketCliente = null;
+        try {
+            socketServidor = new ServerSocket ( this.getPuerto() );
+                        //cargo información del servidor
+            InfoServer is = new InfoServer( this );
+                        //añado al arraylist con los hilos del servidor
+            //this.getServidores().add( is.getId() , this );
+            is.cargaInfo();
         }
-	public void setSocketServidor(ServerSocket socketServidor) {
-		this.socketServidor = socketServidor;
-	}
 
-	public ServerSocket getSocketServidor() {
-		return socketServidor;
-	}
+        catch (Exception e){
+            TrataError te = new TrataError( 100, "Error Arrancando Servidor", e );
+            te.Trata();
+        }
 
-	public void setPuerto(int puerto) {
-		this.puerto = puerto;
-	}
+        // new Log("Servidor iniciado... (Socket TCP). Puerto de escucha:" + this.getPuerto()).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
+            //System.out.println ("Servidor iniciado... (Socket TCP). Puerto de escucha:" + this.getPuerto() );
+        while(true) {
+            try {
+                setSocketCliente(socketServidor.accept());
+                System.out.println( "Cerrado ??" + socketServidor.isClosed() );
+                AtencionClienteThread cliente = new AtencionClienteThread( getSocketCliente() , this );
+            }
+            catch (Exception e) {
+                new TrataError(200, "Error Aceptando Cliente", e).Trata();
+                //socketServidor.close();
+            }
+        }
+    }
+    public void Parar() {
+        try {
+            this.getSocketServidor().close();
+            // new Log("Servidor detenido" + this.getPuerto() ).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
+        }
+        catch (Exception ex) {
+            // new Log("Error Parando Servidor: " + ex.getMessage() ).TrataConTxtBox(this.getServidor().getTxtInfo() ); ;
+        }
 
-	public int getPuerto() {
-		return puerto;
-	}
+    }
+    public void setSocketServidor(ServerSocket socketServidor) {
+            this.socketServidor = socketServidor;
+    }
 
-	public void setSocketCliente(Socket socketCliente) {
-		this.socketCliente = socketCliente;
-	}
+    public ServerSocket getSocketServidor() {
+            return socketServidor;
+    }
 
-	public Socket getSocketCliente() {
-		return socketCliente;
-	}
+    public void setPuerto(int puerto) {
+            this.puerto = puerto;
+    }
 
+    public int getPuerto() {
+            return puerto;
+    }
+
+    public void setSocketCliente(Socket socketCliente) {
+            this.socketCliente = socketCliente;
+    }
+
+    public Socket getSocketCliente() {
+            return socketCliente;
+    }
+    
+    public ArrayList getServidoresArrayList(){
+        return servidores.getServidores();
+    }
+    
     public Servidores getServidores() {
         return servidores;
     }
