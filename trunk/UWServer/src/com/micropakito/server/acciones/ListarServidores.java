@@ -25,7 +25,7 @@ public class ListarServidores {
             System.out.println("llegando que es gerundio");
             ServerList sl = new ServerList();
 
-            ArrayList servidores = (ArrayList)serverContext.getServidores().getServidores();
+            ArrayList servidores = (ArrayList)serverContext.getServidoresArrayList();
 
             Iterator it = servidores.iterator();
             String servidoresStr[] = new String [servidores.size()];

@@ -47,11 +47,6 @@ public class Servidores {
         this.servidores = servidores;
     }
     public void addServer(int id, ServerHilo server){
-
         this.getServidores().add(id, server);
-
     }
-
-
-
 }
